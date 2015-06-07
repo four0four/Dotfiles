@@ -47,9 +47,8 @@ if has("gui_running")
     set guioptions-=T
     set guioptions-=l
     set guioptions-=L
-    " set guifont=Terminus\ 9
-    set guifont=ProggyTinyTTSZ\ 12
-    colorscheme gruvbox
+    set guifont=Terminus\ 9
+    colorscheme harlequin
     set mouse=a
     set guiheadroom=0
 endif
