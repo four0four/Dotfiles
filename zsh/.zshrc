@@ -48,7 +48,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git colorize colored-man command-not-found zsh-syntax-highlighting)
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
@@ -64,11 +64,7 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -78,15 +74,14 @@ export EDITOR='vim'
 
 eval $(dircolors ~/.dircolors)
 
-source /usr/share/oh-my-zsh/plugins/colored-man/colored-man.plugin.zsh
-source /usr/share/oh-my-zsh/plugins/command-not-found/command-not-found.plugin.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 alias ssh="TERM=linux ssh"
 alias sudo="sudo -E"
+alias open='xdg-open 1> /dev/null 2> /dev/null'
+alias grep='grep --color=auto'
+alias objdump='objdump -M intel'
 
 
-
+# prompt shit
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
