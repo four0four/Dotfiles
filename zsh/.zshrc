@@ -1,14 +1,11 @@
 # Path to your oh-my-zsh installation.
-# TODO - clean this up
 ZSH=/usr/share/oh-my-zsh/
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="eastwood"
-#ZSH_THEME="norm"
+# ZSH_THEME="jreese"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -19,6 +16,12 @@ ZSH_THEME="eastwood"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -45,32 +48,56 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode colorize colored-man)
+plugins=(git)
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-export PATH=$HOME/bin:$HOME/tools:/usr/local/bin:$PATH
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
 export EDITOR='vim'
-export COUNTRY='US'
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
-unset SSH_ASKPASS
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-#alias ssh="TERM=linux ssh"
-alias kexec-auto='kexec -l /boot/efi/EFI/arch/vmlinuz-linux.efi --initrd=/boot/efi/EFI/arch/initramfs-linux.img --reuse-cmdline'
-alias ls='ls --color=auto -F'
-alias open='xdg-open 1> /dev/null 2> /dev/null'
-alias sudo="sudo -E "
-alias grep='grep --color=auto'
-alias objdump='objdump -M intel'
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+eval $(dircolors ~/.dircolors)
 
+source /usr/share/oh-my-zsh/plugins/colored-man/colored-man.plugin.zsh
+source /usr/share/oh-my-zsh/plugins/command-not-found/command-not-found.plugin.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/doc/pkgfile/command-not-found.zsh
 
-bindkey "^R" history-incremental-search-backward
+alias ssh="TERM=linux ssh"
+alias sudo="sudo -E"
+
+
+
+if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
+
+local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+
+PROMPT='%{$fg_bold[red]%}%n%{$fg_bold[blue]%}@%{$fg_bold[cyan]%}%m%{$reset_color%} %{$fg_bold[blue]%}%~ \
+$(git_prompt_info)\
+%{$fg[red]%}%(!.#.»)%{$reset_color%} '
+PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
+RPS1='${return_code}'
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}±%{$fg[yellow]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_DIRTY="⚡"
